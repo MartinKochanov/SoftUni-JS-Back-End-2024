@@ -22,11 +22,18 @@ async function getCats() {
 
 async function getBreeds() {
     const data = await readData();
-
     return data.breeds;
+}
+
+async function addBreed(breed) {
+    const data = await readData();
+    data.breeds.push(breed)
+    await writeData(data);
 }
 
 module.exports = {
     getCats,
-    getBreeds
+    getBreeds,
+    addBreed,
+    writeData
 }

@@ -1,3 +1,4 @@
+const { addBreed } = require('../model');
 const { readTemplate, layout } = require('../util');
 
 async function addBreedHandler(req, res) {
@@ -16,13 +17,29 @@ async function postBreedHandler(req, res) {
         data += chunk;
     });
 
-    req.on('end', () => {
-        console.log(new URLSearchParams(data))
+    req.on('end', async () => {
+        const formData = new URLSearchParams(data);
+        const breed = formData.get('breed');
+
+        if (breed) {
+
+            await addBreed(breed);
+
+            res.writeHead(301, {
+                'Location': '/'
+            })
+            res.end();
+        } else {
+            res.writeHead(301, {
+                'Location': '/cats/add-breed'
+            });
+            res.end();
+        }
+
+
     })
 
 
-    res.statusCode = 204;
-    res.end();
 }
 
 module.exports = {

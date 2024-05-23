@@ -20,5 +20,7 @@ module.exports = {
     },
     searchGet: (req, res) => {
         res.render('search')
-    }
+    },
+
+    //TODO: Make search functionality work! 
 }

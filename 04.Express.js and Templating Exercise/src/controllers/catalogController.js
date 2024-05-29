@@ -18,9 +18,44 @@ module.exports = {
 
         res.render('details', { movie });
     },
-    searchGet: (req, res) => {
-        res.render('search')
-    },
+    searchGet: async (req, res) => {
 
-    //TODO: Make search functionality work! 
+        let movies = await getAllMovies();
+
+        if (req.url === '/search') {
+            res.render('search', { movies });
+        } else {
+
+            const title = req.query.search;
+            const genre = req.query.genre;
+            const year = req.query.year;
+
+            movies = filterMovies(movies, title, genre, year);
+
+            res.render('search', { movies })
+
+        }
+    },
+}
+
+function filterMovies(movies, title, genre, year) {
+
+    let filteredMovies = movies;
+
+    if (year) {
+        filteredMovies = filteredMovies.filter(movie => movie.year === Number(year));
+    }
+
+    if (genre) {
+        filteredMovies = filteredMovies.filter(movie => movie.genre.toLowerCase() === genre.toLowerCase());
+    }
+
+    if (title) {
+        filteredMovies = filteredMovies.filter(movie => movie.title.toLowerCase().includes(title.toLowerCase()));
+    }
+
+
+
+
+    return filteredMovies;
 }

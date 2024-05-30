@@ -54,8 +54,5 @@ function filterMovies(movies, title, genre, year) {
         filteredMovies = filteredMovies.filter(movie => movie.title.toLowerCase().includes(title.toLowerCase()));
     }
 
-
-
-
     return filteredMovies;
 }

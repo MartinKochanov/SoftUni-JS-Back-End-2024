@@ -1,0 +1,25 @@
+<main>
+    <section id="attachCast">
+        <div class="attachCastSection">
+            <h1>Attach New Cast</h1>
+            <div class="attach-form">
+                {{#with movie}}
+                <h2>{{title}}</h2>
+                <img class="movie" src="{{imgURL}}">
+                {{/with}}
+                <form action="" method="">
+                    <label for="cast">Cast</label>
+                    <select id="cast" name="cast">
+                        <option value="none" selected>--------</option>
+                        {{#each cast}}
+                        <option value="_id">{{name}}</option>
+                        {{/each}}
+                    </select>
+                    <div id="center-btn">
+                        <button id="create-btn">Add Cast</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>

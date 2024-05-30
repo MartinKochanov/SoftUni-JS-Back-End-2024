@@ -25,6 +25,11 @@
             <img src="{{imgURL}}" alt="{{title}}">
         </div>
     </div>
-
+    {{> cast}}
+    <div class="customBtn">
+        <button class="attach-cast-btn">
+            <a href="/attach/cast/{{_id}}">Attach Cast</a>
+        </button>
+    </div>
 </section>
 {{/with}}

@@ -37,8 +37,7 @@ const movieSchema = new Schema({
     },
     cast: {
         type: [Types.ObjectId],
-        ref: 'Cast',
-        default: []
+        ref: 'Cast'
     }
 })
 

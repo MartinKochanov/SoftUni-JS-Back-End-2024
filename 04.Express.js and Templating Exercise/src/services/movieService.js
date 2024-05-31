@@ -28,6 +28,7 @@ async function createMovie(movieData) {
     return await movie.save();
 }
 
+
 module.exports = {
     getAllMovies,
     getMovieById,

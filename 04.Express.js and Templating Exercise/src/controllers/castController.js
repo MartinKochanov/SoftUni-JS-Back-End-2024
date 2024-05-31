@@ -1,5 +1,5 @@
 const { Cast } = require('../models/Cast');
-const { createCast, getAllCasts } = require('../services/castService');
+const { createCast, getAllCasts, attachCastToMovie } = require('../services/castService');
 const { getMovieById } = require('../services/movieService');
 module.exports = {
     createCastGet: (req, res) => {
@@ -19,7 +19,12 @@ module.exports = {
         res.render('cast-attach', { movie, cast })
     },
     attachCastPost: async (req, res) => {
-        // TODO: Make it work!
-        res.end();
+
+        const movieId = req.params.id;
+        const castId = req.body.cast;
+
+        await attachCastToMovie(movieId, castId);
+
+        res.redirect('/details/'+ movieId)
     }
 }

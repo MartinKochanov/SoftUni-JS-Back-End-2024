@@ -23,7 +23,11 @@ module.exports = {
         const movieId = req.params.id;
         const castId = req.body.cast;
 
-        await attachCastToMovie(movieId, castId);
+       const attached = await attachCastToMovie(movieId, castId);
+
+       if(!attached) {
+        res.render('404')
+       }
 
         res.redirect('/details/'+ movieId)
     }

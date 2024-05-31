@@ -1,3 +1,5 @@
+const { Movie } = require("../models/Movie");
+const { getCastById } = require("../services/castService");
 const { getAllMovies, getMovieById } = require("../services/movieService");
 
 module.exports = {
@@ -15,8 +17,14 @@ module.exports = {
         }
 
         movie.starRating = '&#x2605'.repeat(movie.rating);
+        const cast = [];
 
-        res.render('details', { movie });
+        for (const castID of movie.cast) {
+            cast.push(await getCastById(castID))
+        }
+
+
+        res.render('details', { movie, cast });
     },
     searchGet: async (req, res) => {
 

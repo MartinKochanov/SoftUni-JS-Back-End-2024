@@ -26,18 +26,28 @@ async function getCastById(id) {
 
 async function attachCastToMovie(movieId, castId) {
 
-    //  TODO: Validate before update 
+    try {
+        await Movie.findByIdAndUpdate(movieId,
+            { $push: { cast: castId } },
+            { new: true, useFindAndModify: false }
+        );
+    } catch (err) {
+        return false;
+    }
 
-    await Movie.findByIdAndUpdate(movieId,
-        { $push: { cast: castId } }),
-        { new: true, useFindAndModify: false }
+    try {
+        Cast.findByIdAndUpdate(castId,
+            { $set: { movie: movieId } },
+            { new: true, useFindAndModify: false }
+        );
 
-    await Cast.findByIdAndUpdate(castId,
-        { $set: { movie: movieId } },
-        { new: true, useFindAndModify: false }
-    )
+    } catch (error) {
+        return false;
+    }
+
+    return true;
 
 }
 
 
-module.exports = { getAllCasts, createCast, attachCastToMovie }
+module.exports = { getAllCasts, createCast, attachCastToMovie, getCastById }

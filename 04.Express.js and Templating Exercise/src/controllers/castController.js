@@ -6,7 +6,20 @@ module.exports = {
         res.render('cast-create');
     },
     createCastPost: async (req, res) => {
-        await createCast(req.body);
+
+        const errors = {
+            name: !req.body.name,
+            age: !req.body.age,
+            born: !req.body.born,
+            nameInMovie: !req.body.nameInMovie,
+            imageUrl: !req.body.imageUrl,
+        };
+
+        if (Object.values(errors).includes(true)) {
+            res.render('cast-create', { cast: req.body, errors });
+            return;
+        }
+        const cast = await createCast(req.body);
         res.redirect('/');
     },
 
@@ -23,12 +36,12 @@ module.exports = {
         const movieId = req.params.id;
         const castId = req.body.cast;
 
-       const attached = await attachCastToMovie(movieId, castId);
+        const attached = await attachCastToMovie(movieId, castId);
 
-       if(!attached) {
-        res.render('404')
-       }
+        if (!attached) {
+            res.render('404')
+        }
 
-        res.redirect('/details/'+ movieId)
+        res.redirect('/details/' + movieId)
     }
 }

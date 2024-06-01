@@ -1,5 +1,4 @@
 const { Cast } = require("../models/Cast");
-const { Movie } = require("../models/Movie");
 const { getMovieById } = require("./movieService");
 
 async function getAllCasts() {
@@ -14,10 +13,12 @@ async function createCast(castData) {
         born: castData.born,
         nameInMovie: castData.nameInMovie,
         imageUrl: castData.imageUrl,
-        movie: null
+        movie: castData.movie
     })
 
-    await cast.save()
+    await cast.save();
+
+    return cast;
 }
 
 async function getCastById(id) {
@@ -27,7 +28,7 @@ async function getCastById(id) {
 async function attachCastToMovie(movieId, castId) {
 
     try {
-        await Movie.findByIdAndUpdate(movieId,
+        await getMovieById(movieId,
             { $push: { cast: castId } },
             { new: true, useFindAndModify: false }
         );

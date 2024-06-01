@@ -21,27 +21,5 @@ module.exports = {
         }
         const cast = await createCast(req.body);
         res.redirect('/');
-    },
-
-    attachCastGet: async (req, res) => {
-
-        const id = req.params.id;
-        const cast = await getAllCasts();
-        const movie = await getMovieById(id);
-
-        res.render('cast-attach', { movie, cast })
-    },
-    attachCastPost: async (req, res) => {
-
-        const movieId = req.params.id;
-        const castId = req.body.cast;
-
-        const attached = await attachCastToMovie(movieId, castId);
-
-        if (!attached) {
-            res.render('404')
-        }
-
-        res.redirect('/details/' + movieId)
     }
 }

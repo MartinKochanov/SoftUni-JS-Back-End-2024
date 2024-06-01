@@ -6,10 +6,7 @@ async function getAllMovies() {
 }
 
 async function getMovieById(id) {
-
-    return await Movie.findById(id).lean();
-
-    
+    return await Movie.findById(id).lean().populate('cast');
 }
 
 async function createMovie(movieData) {
@@ -28,9 +25,25 @@ async function createMovie(movieData) {
     return await movie.save();
 }
 
+async function attachCastToMovie(movieId, castId) {
+
+    const movie = await Movie.findById(movieId);
+
+    if (!movie) {
+        throw new Error(`Movie ${movieId} not found!`);
+    }
+
+    movie.cast.push(castId);
+
+    await movie.save();
+
+    return movie;
+}
+
 
 module.exports = {
     getAllMovies,
     getMovieById,
-    createMovie
+    createMovie,
+    attachCastToMovie
 }

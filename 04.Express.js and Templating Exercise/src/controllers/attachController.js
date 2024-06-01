@@ -16,9 +16,6 @@ module.exports = {
 
         const castInMovie = movie.cast.map(c => c._id.toString());
 
-
-        console.log(movie);
-
         res.render('cast-attach', { movie, cast: allCast.filter(c => !castInMovie.find(castId => castId == c._id.toString())) })
     },
 
